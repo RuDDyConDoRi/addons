@@ -1,6 +1,6 @@
 /* 
  * Copyright (c) 2013 by GeoBolivia 
- * Author: Ruddy Condori Topoco <rucocool@hotmail.com, rucocool@gmail.com, rucondori@geo.gob.bo> 
+ * Author: Ruddy Condori Topoco <rucocool@gmail.com, rucocool@hotmail.com, rucondori@geo.gob.bo> 
  */
 
 Ext.namespace("GEOR.Addons");
@@ -47,7 +47,7 @@ GEOR.Addons.InsertCSV.prototype = {
         this.jsonFormat = new OpenLayers.Format.JSON();
         this.geojsonFormat = new OpenLayers.Format.GeoJSON();
         layerCSV = new OpenLayers.Layer.Vector(OpenLayers.i18n('title'), {
-            displayInLayerSwitcher: true,
+            displayInLayerSwitcher: false,
              styleMap: new OpenLayers.StyleMap({
                 "default": {
 		    graphicName: "cross",
@@ -166,7 +166,7 @@ GEOR.Addons.InsertCSV.prototype = {
         }
 	
 	if (!this.win) {
-	    form.getForm().reset();
+	    //form.getForm().reset();
             this.win = new Ext.Window({
                 closable: true,
                 closeAction: 'hide',
