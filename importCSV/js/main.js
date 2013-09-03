@@ -16,7 +16,7 @@ GEOR.Addons.InsertCSV.prototype = {
     item: null,
     stores: {},
     layer: null,
-    win: null,
+    //win: null,
     jsonFormat: null,
     geojsonFormat: null,
     cbboxLat: null,
@@ -166,8 +166,10 @@ GEOR.Addons.InsertCSV.prototype = {
         }
 	
 	if (!this.win) {
-	    //form.getForm().reset();
             this.win = new Ext.Window({
+                autoHeight : true,
+                constrain: true,
+                iconCls: 'insertcsv-icon',
                 closable: true,
                 closeAction: 'hide',
 		collapsible: true,
@@ -203,7 +205,7 @@ GEOR.Addons.InsertCSV.prototype = {
 			    if (!isNaN(num[indexLt]) && !isNaN(num[indexLg])) {
 				putMarker();	    
 				this.win.hide();
-				GEOR.Addons.InsertCSV.prototype.destroy();					
+				GEOR.Addons.InsertCSV.prototype.resetValues();					
 			    } else{
 				var cont = OpenLayers.i18n('Insert Fields Latitude and Longitude')+'<br><pre><big><big><b><font color=#A00000>           "-63.121212"</font></b></big></big></pre>';
 				Ext.Msg.alert( OpenLayers.i18n('The Data Not Numeric'), cont);
@@ -218,7 +220,7 @@ GEOR.Addons.InsertCSV.prototype = {
 		    "hide": function() {
 		        GEOR.Addons.InsertCSV.prototype.enablePanel(false);
 		        GEOR.Addons.InsertCSV.prototype.enablePanelDelim(false);
-		        GEOR.Addons.InsertCSV.prototype.destroy();
+		        GEOR.Addons.InsertCSV.prototype.resetValues();
 		    }, scope: this
 		}
             });
@@ -484,9 +486,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	return valor;
     },
     
-    destroy: function() {
-        this.layer = null;
-        this.mmap = null;
+    resetValues:function(){
 	var newData = [];
 	newData.push([[0,""]]);
 	information.loadData(newData,false);
@@ -495,6 +495,12 @@ GEOR.Addons.InsertCSV.prototype = {
 	cbboxLat.setValue('');
 	cbboxLon.setValue('');
 	cbboxDelim.setValue('');
+    },
+    
+    destroy: function() {
+        this.layer = null;
+        this.mmap = null;
+	this.win.destroy();
     },
 };
 
