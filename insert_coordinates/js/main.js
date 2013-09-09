@@ -26,7 +26,7 @@ GEOR.Addons.Insert_Coordinates.prototype = {
     pointer: 0,
     area: 19,
     layer:null,
-    
+     
     
     //Values ​​that will allow validating text fields
     values: {
