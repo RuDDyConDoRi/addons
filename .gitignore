@@ -2,14 +2,14 @@ cadastre/
 coordinates/
 magnifier/
 openstreetmap/
-annotation
-convertion_coordinates
-googlemaps
-insert_coordinates_1
-insertcsv
-magnifier
+annotation/
+convertion_coordinates/
+googlemaps/
+insert_coordinates_1/
+insertcsv/
+magnifier/
 README.md
 readme.txt
-sol
-swipelayers
+sol/
+swipelayers/
 

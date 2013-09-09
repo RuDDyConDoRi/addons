@@ -1,4 +1,4 @@
-{
+{ 
     "js": [
         "js/main.js",
         "../../../lib/externals/openlayers/lib/OpenLayers/Marker.js",
