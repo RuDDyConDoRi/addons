@@ -1,0 +1,93 @@
+{ 
+    "js": [
+        "js/main.js",
+        "../../../lib/externals/openlayers/lib/OpenLayers/Marker.js",
+        "../../../lib/externals/openlayers/lib/OpenLayers/Layer/Markers.js",
+        "../../../lib/externals/openlayers/lib/OpenLayers/Icon.js",
+        "lib/Utm_LonLat.js" 
+    ],
+    "css": [
+        "css/main.css"
+    ],
+    "default_options": {
+        "urlHelp": "http://geo.gob.bo/?-Ayuda-45-"
+    },
+    "i18n": { 
+        "en": {
+            "title_window":     "Insert coordinates",
+            "coordinates":      "Coordinates",
+            "titleDD":          "COORDINATES: Decimal degrees",
+            "titleDMS":         "COORDINATES: Degrees Minutes Seconds",
+            "titleUTM":         "COORDINATES: UTM",
+            "comboDD":          "Decimal Degrees",
+            "comboDMS":         "Degrees Minutes Seconds",
+            "comboUTM":         "(UTM) Universal Transverse Mercator ",
+            "comboWatermark":   "Scroll and select your option",
+            "locate":           "locate",
+            "latitude":         "Latitude",
+            "longitude":        "Length",
+            "area":             "Area :",
+            "outOfRange":       "Out of Range",
+            "invalidCoord":     "Coordinates not valid !!!",
+            "existingTitle":    "Existing Title",
+            "otherName":        "Enter another name for title",
+            "error":            "Error",
+            "fillFields":       "Fill out all fields !!!",
+            "invalidValues":    "Invalid values !!!",
+            "maxCharacters":    "The title of the coordinate must be maximum size of 20 characters",
+            "icon" :            "Icon",
+            "namepoint" :       "Title"
+        },
+        "es": {
+            "title_window":     "Insertar Coordenadas",
+            "coordinates":      "Coordenadas :",
+            "titleDD":          "COORDENADAS : Grados Decimales",
+            "titleDMS":         "COORDENADAS : Grados Minutos Segundos",
+            "titleUTM":         "COORDENADAS : UTM",
+            "comboDD":          "Grados Decimales",
+            "comboDMS":         "Grados Minutos Segundos",
+            "comboUTM":         "(UTM) Universal Transversal de Mercator",
+            "comboWatermark":   "Desplace y elija su opcion",
+            "locate":           "ubicar",
+            "latitude":         "Latitud",
+            "longitude":        "Longitud",
+            "area":             "Zona :",
+            "outOfRange":       "Fuera de Rango",
+            "invalidCoord":     "Coordenadas no validas !!!",
+            "existingTitle":    "Titulo Existente",
+            "otherName":        "Ingrese otro nombre para su titulo",
+            "error":            "Error",
+            "fillFields":       "LLene todos los campos vacios !!!",
+            "invalidValues":    "Valores no validos !!!",
+            "maxCharacters":    "El titulo de la coordenada debe ser de tamaño maximo de 20 caracteres",
+            "icon" :            "Icono",
+            "namepoint" :       "Titulo"
+        },
+        "fr": {
+            "title_window":     "Insert coordinates",
+            "coordinates":      "Coordonne :",
+            "titleDD":          "COORDONNÉES: degrès décimaux",
+            "titleDMS":         "Coordonnées: Degrés Minutes Secondes",
+            "titleUTM":         "COORDONNÉES: UTM",
+            "comboDD":          "Degrès Décimaux",
+            "comboDMS":         "Degrés Minutes Secondes",
+            "comboUTM":         "(UTM) Universal Transverse Mercator",
+            "comboWatermark":   "Faites défiler et sélectionnez l'option",
+            "locate":           "repérer",
+            "latitude":         "Latitude",
+            "longitude":        "Longueur",
+            "area":             "Région :",
+            "outOfRange":       "Hors de Portée",
+            "invalidCoord":     "Coordonne pas valide !!!",
+            "existingTitle":    "Titre Existante",
+            "otherName":        "Entrez un autre nom pour le titre",
+            "error":            "Erreur",
+            "fillFields":       "Remplissez tous les champs !!!",
+            "invalidValues":    "Les valeurs incorrectes !!!",
+            "maxCharacters":    "Le titre de la coordonnée doit être la taille maximum de 20 caractères",
+            "icon" :            "icône",
+            "namepoint" :       "Titre"
+        }
+    }
+}
+    

@@ -10,3 +10,10 @@
     height:20px;
     width:31px;
 }
+.help-icon {
+    background-image: url(../img/help.png) !important;
+}
+
+.delete-icon {
+    background-image: url(../img/delete.gif) !important;
+}
