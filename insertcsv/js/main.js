@@ -564,7 +564,7 @@ function readFileCSV(evt) {						//readFileCSV
 	    var r = new FileReader();
 	    r.onload = function(e) { 
 		var contents = e.target.result;
-		if (f.size <= 51200) {
+		if (f.size <= OpenLayers.i18n('size')) {
 		    myFile = contents;
 		    var cab = myFile.split("\n");
 		    arrayHeadCSV = cab[0];
