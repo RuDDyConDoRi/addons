@@ -5,7 +5,7 @@ This addon allows users to
 authors: @rucondori
 
 For the addon config should look like this:
-
+```
     {
         "id": "insertcsv_0",
         "name": "InsertCSV",
@@ -21,9 +21,9 @@ For the addon config should look like this:
         }
     }
     
-
+```
 For a :
-
+```
     {
         "id": "insertcsv_0",
         "name": "InsertCSV",
@@ -38,7 +38,7 @@ For a :
             "fr": "Outil pour insérer un fichier CSV"
         }
     }
-
+```
 
 Default options for this addon are specified in the manifest.json file:
 

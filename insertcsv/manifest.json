@@ -9,7 +9,8 @@
         "css/MultiSelect.css"
     ],
     "default_options": {
-        "editableCombos": true
+        "editableCombos": true,
+        "urlHelp": "http://geo.gob.bo/?-Ayuda-45-"
     },
     "i18n": {
         "en": {
@@ -20,7 +21,7 @@
             "Longitude":"Longitude",
             "csv_title": "Title",
             "Delimiter":"Delimiter",
-            "The Data Not Numeric": "The Data Not Numeric",
+            "The Data Not Numeric": "The Field Not Numeric",
             "Insert Fields Latitude and Longitude": "Insert Fields Latitude and Longitude in The Next Format: ",
             "Required Field": "Required Field",
             "Select Fields": "Select Fields Latitude and Longitude",
@@ -50,8 +51,8 @@
             "Longitude":"Longitud",
             "csv_title": "Titulo",
             "Delimiter":"Delimitador",
-            "The Data Not Numeric": "El Dato No es Numerico",
-            "Insert Fields Latitude and Longitude": "Inserte Campos Latitud y Longitud en El Siguiente Formato: ",
+            "The Data Not Numeric": "El Campo No es Numerico",
+            "Insert Fields Latitude and Longitude": "Inserte Campos Latitud y Longitud En El Siguiente Formato: ",
             "Required Field": "Campo Obligatorio",
             "Select Fields": "Seleccione Campos Latitud y Longitud",
             "The CSV file must weigh 50 Kbytes": "El archivo CSV debe pesar 50 Kbytes o menos",
@@ -80,7 +81,7 @@
             "Longitude":"Longueur",
             "csv_title": "Titre",
             "Delimiter":"Delimiter",
-            "The Data Not Numeric": "Les données non numérique",
+            "The Data Not Numeric": "Les domaine non numérique",
             "Insert Fields Latitude and Longitude": "Latitudes et la longitude insérer des champs dans la prochaine format: ",
             "Required Field": "Champ Obligatoire",
             "Select Fields": "Sélectionner les champs Latitude et Longitude",

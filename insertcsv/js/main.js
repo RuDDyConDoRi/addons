@@ -30,17 +30,13 @@ GEOR.Addons.InsertCSV.prototype = {
     information: null, 					
     listDesc:null,						// listDesc
     form: null,					//form
-    formLayers:null,
     delim: "",		
     arrayHeadCSV: null,					//arrayHeadCSV
     ctrlSelect:null,					//ctrlSelect
     layerCSV: null,					//layerCSV
     mmap: null,						
-
-    
-    formulario:null,
     nameLayer:"",
-    
+    icon: null,
     /**
      * Method: init
      *
@@ -81,16 +77,31 @@ GEOR.Addons.InsertCSV.prototype = {
 	panelDesc = this.createPanelDesc();
 	panelDelim = this.createPanelDelim();
         form = this.createForm();
-	formLayers = this.createFormLayers();
-	
-	
-	//mmap.addControl(new OpenLayers.Control.LayerSwitcher({'div':OpenLayers.Util.getElement('layerswitcher')}));
-	
-        return this.item;
+	return this.item;
+    },
+    
+    createIcon: function(){
+	var random=Math.floor(Math.random() * 5) + 1;
+	switch(random){
+	    case 1:
+		icon='app/addons/insertcsv/img/marker1.png';
+		break;
+	    case 2:
+		icon='app/addons/insertcsv/img/marker2.png';
+		break;
+	    case 3:
+		icon='app/addons/insertcsv/img/marker3.png';
+		break;
+	    case 4:
+		icon='app/addons/insertcsv/img/marker4.png';
+		break;
+	    case 5:
+		icon='app/addons/insertcsv/img/marker5.png';
+		break;
+	}	
     },
     
     showWindow: function() {
-	this.showWindowLayers();
 	function putMarker(){
             var dats= form.getForm().getValues(true).replace(/&/g,', ');
             var da= dats.split(",");
@@ -112,7 +123,7 @@ GEOR.Addons.InsertCSV.prototype = {
                         ),{
 			    foo : GEOR.Addons.InsertCSV.prototype.setInformationPopup(i)
 			},{
-			    externalGraphic: 'http://www.openlayers.org/dev/img/marker.png',
+			    externalGraphic: this.icon,
 			    graphicHeight: 21,
                             graphicWidth: 16
 			}
@@ -144,9 +155,16 @@ GEOR.Addons.InsertCSV.prototype = {
                 title: OpenLayers.i18n("popup_title"),
                 border: false,
                 buttonAlign: 'left',
-                items :  [form],
-		
+                items : [form],
 		fbar: [{
+		    iconCls:'help-icon',
+		    iconAlign: 'left',
+		    scale:'medium',
+		    scope: this,
+		    handler : function() {
+			window.open(this.options.urlHelp);
+		    }
+		},'->',{
 		    text: OpenLayers.i18n('Import'),
 		    handler: function(){
 			var dats= form.getForm().getValues(true).replace(/&/g,', ');
@@ -154,10 +172,12 @@ GEOR.Addons.InsertCSV.prototype = {
 			var lt = da[1].split("=");
 			var lg = da[2].split("=");          
 			if (lt[1] != 'Select%20a%20field' && lg[1] != 'Select%20a%20field') {
-			    var num = arrayHeadCSV.split(delim);
+			    var cab = myFile.split("\n");
+			    var num = cab[1].split(delim);
+			    headCSV = cab[0].split(delim);
 			    var indexLt = 0;
 			    var indexLg = 0;
-			    for(var i = 0; i < da.length; i++) {
+			    for(var i = 0; i < headCSV.length; i++) {
 			        if (lt[1] == headCSV[i]) {
 			            indexLt = i; 
 			        }
@@ -166,34 +186,31 @@ GEOR.Addons.InsertCSV.prototype = {
 			            indexLg = i;
 			        }
 			    }
-			    
 			    if (!isNaN(num[indexLt]) && !isNaN(num[indexLg])) {
 				GEOR.Addons.InsertCSV.prototype.createLayer(nameLayer);
-				putMarker();
-				GEOR.Addons.InsertCSV.prototype.createLayerPanel(nameLayer);
-				
+				putMarker();			
 				this.win.hide();
 				GEOR.Addons.InsertCSV.prototype.resetValues();
 			    } else{
-				var cont = OpenLayers.i18n('Insert Fields Latitude and Longitude')
-					   +'<br><pre><big><big><b><font color=#A00000>           "-63.121212"</font></b></big></big></pre>';
-				Ext.Msg.alert( OpenLayers.i18n('The Data Not Numeric'), cont);
+				var msg = OpenLayers.i18n('Insert Fields Latitude and Longitude')
+					   +'<br><big><big><b><font color=#A00000><div align=center>"-63.121212"</div></font></b></big></big>';
+				 Ext.MessageBox.show({
+				    title: OpenLayers.i18n('The Data Not Numeric'),
+				    width: 225,
+				    height: 100,
+				    y: 50,
+				    msg: msg,
+				    buttons: Ext.MessageBox.OK,
+				    icon: Ext.MessageBox.ERROR
+				})	   				   
 			    }                                
 			} else{
 			    Ext.Msg.alert(OpenLayers.i18n('Required Field'), OpenLayers.i18n('Select Fields'));
 			}	    
 		    },
 		    scope: this
-		},'->',{
-		    iconCls:'help-icon',
-		    iconAlign: 'left',
-		    //text: 'help',
-		    scale:'medium',
-		    scope: this,
-		    handler : function() {
-			window.open(this.options.urlHelp);
-		    }
-		}],            
+		}
+		],            
                 listeners: {
 		    "hide": function() {
 		        GEOR.Addons.InsertCSV.prototype.enablePanel(false);
@@ -207,38 +224,7 @@ GEOR.Addons.InsertCSV.prototype = {
         }
         this.win.show();
     },
-    
-    showWindowLayers: function() {
-		
-	if (!this.winLayers) {
-            this.winLayers = new Ext.Window({
-                autoHeight : true,
-                constrain: true,
-		x: 0,
-		y: 400,
-                iconCls: 'insertcsv-icon',
-                closable: false,
-                closeAction: 'hide',
-		collapsible: true,
-                layout:'column',
-		resizable: false,
-                width:220,
-                title: "Archivos CSV Insertados",
-                border: false,
-                //buttonAlign: 'right',
-                items :  [formLayers],
-                listeners: {
-		    "hide": function() {
-		        //Borrar las capas
-		    },
-		    scope: this
-		}
-            });
-	}
-	//this.winLayers.setPosition(0,400);
-        this.winLayers.show();
-    },
-    
+           
     createPopup:function (feature) {
         popup = new GeoExt.Popup({
             closable: true,
@@ -301,23 +287,8 @@ GEOR.Addons.InsertCSV.prototype = {
 	    ]
 	});
     },
-    
-    createFormLayers: function(){
-	
-	formulario = new Ext.FormPanel({
-	    labelWidth: 100,		
-            labelAlign: 'right',
-            width: '100%',
-	    height: '100%',
-            frame: true,
-            //bodyStyle: 'padding:5px 5px 0',
-            //items: []
-	});
-	 
-	return formulario;
-    },
-    
-    createNameLayer: function (name){
+        
+    setNameLayer: function (name){
 	nameLayer = name;
     },
     
@@ -548,42 +519,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	cbboxLon.setValue('');
 	cbboxDelim.setValue('');
     },
-    
-    createLayerPanel:function(name){
-	var panel =  new Ext.Panel({
-	    labelWidth: 100,
-	    labelAlign: 'right',
-            //width: '100%',
-	    //height: '100%',
-	    html: '<div id="layerswitcher" class="olControlLayerSwitcher"> </div>',
-	    layout: 'table',
-            frame: true,
-            bodyStyle: 'padding:5px 5px 0',
-            items: [{
-		xtype: 'button',
-		iconCls:'delete-icon',
-		iconAlign: 'left',
-		columnWidth: .20,
-		//text: 'help',
-		scale:'medium',
-		scope: this,
-		handler : function() {
-		    alert("quita capa");
-		}
-	      },{
-		xtype: 'checkbox',
-		name: 'field1',
-		checked: true,
-		boxLabel: name,
-		columnWidth: .80,
-		id : 'id_check'
-	      }
-	    ]
-	});
-	formulario.add(panel);
-	formulario.doLayout(); 
-    },
-    
+        
     createLayer:function(name){
 	layerCSV = new OpenLayers.Layer.Vector(name, {
             displayInLayerSwitcher: true,
@@ -594,7 +530,7 @@ GEOR.Addons.InsertCSV.prototype = {
                     strokeColor: "fuchsia",
                     strokeWidth: 2,
                     fillOpacity: 0//,
-		    //bbox: "", 
+		    //bbox: "",  
                 }
              }),
 	    //bbox: "", 
@@ -616,7 +552,6 @@ GEOR.Addons.InsertCSV.prototype = {
         this.layer = null;
         this.mmap = null;
 	this.win.destroy();
-	this.winLayers.destroy();
     },
 };
 
@@ -632,10 +567,12 @@ function readFileCSV(evt) {						//readFileCSV
 		if (f.size <= 51200) {
 		    myFile = contents;
 		    var cab = myFile.split("\n");
-		    arrayHeadCSV = cab[1];
+		    arrayHeadCSV = cab[0];
 		    if (arrayHeadCSV !=null) {
 			GEOR.Addons.InsertCSV.prototype.enablePanelDelim(true);
-			GEOR.Addons.InsertCSV.prototype.createNameLayer(f.name);				////-------------------------------------------------->>>			
+			GEOR.Addons.InsertCSV.prototype.enablePanel(false);
+			GEOR.Addons.InsertCSV.prototype.setNameLayer(f.name);
+			GEOR.Addons.InsertCSV.prototype.createIcon();
 		    } else{
 			Ext.Msg.alert(OpenLayers.i18n('Formed wrong'), OpenLayers.i18n('NO File data are well defined'));
 		    }
