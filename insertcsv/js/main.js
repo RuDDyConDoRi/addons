@@ -16,7 +16,6 @@ GEOR.Addons.InsertCSV.prototype = {
     item: null,
     stores: {},
     layer: null,
-    //win: null,
     jsonFormat: null,
     geojsonFormat: null,
     cbboxLat: null,
@@ -47,8 +46,6 @@ GEOR.Addons.InsertCSV.prototype = {
         var lang = OpenLayers.Lang.getCode();
         this.jsonFormat = new OpenLayers.Format.JSON();
         this.geojsonFormat = new OpenLayers.Format.GeoJSON();
-        //////
-	
 	mmap = this.map;
         
         this.item = new Ext.menu.Item({
