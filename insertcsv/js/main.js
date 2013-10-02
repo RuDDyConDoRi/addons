@@ -21,19 +21,19 @@ GEOR.Addons.InsertCSV.prototype = {
     geojsonFormat: null,
     cbboxLat: null,
     cbboxlon: null,
-    cbbxTitle:null,					/// cbbxTitle
+    cbbxTitle:null,					
     cbboxDelim:null,
     panelData: null,
     panelDesc: null,
-    headCSV: "",						///headCSV
-    listItemDesc: null,					//listItemDesc
+    headCSV: "",						
+    listItemDesc: null,					
     information: null, 					
-    listDesc:null,						// listDesc
-    form: null,					//form
+    listDesc:null,						
+    form: null,					
     delim: "",		
-    arrayHeadCSV: null,					//arrayHeadCSV
-    ctrlSelect:null,					//ctrlSelect
-    layerCSV: null,					//layerCSV
+    arrayHeadCSV: null,					
+    ctrlSelect:null,					
+    layerCSV: null,					
     mmap: null,						
     nameLayer:"",
     icon: null,
@@ -446,7 +446,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	return panel;
     },
          
-    enablePanelDelim: function(value){					///enablePanelDelim
+    enablePanelDelim: function(value){					
 	if (value == true) {
 	    panelDelim.enable();
 	}else{
@@ -454,7 +454,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	}
     },
      
-    enablePanel:function (value){					//enablePanel 				
+    enablePanel:function (value){								
 	if (value == true) {
 	    panelData.enable();
 	    panelDesc.enable();
@@ -464,7 +464,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	}
     },
           
-    setInformationPopup:function (index){						//setInformationPopup
+    setInformationPopup:function (index){						
 	var dats= form.getForm().getValues(true).replace(/&/g,', ');
 	var da= dats.split(",");
 	var lg = da[1].split("=");
@@ -494,7 +494,7 @@ GEOR.Addons.InsertCSV.prototype = {
 	return(value);
     },
         
-    getItemSelect:function(row,column){				//getItemSelect
+    getItemSelect:function(row,column){				
 	var valor="";
 	var v="";
 	var rows = myFile.split("\n");
@@ -555,7 +555,7 @@ GEOR.Addons.InsertCSV.prototype = {
     },
 };
 
-function readFileCSV(evt) {						//readFileCSV
+function readFileCSV(evt) {						
     var f = evt.target.files[0];
     
     if (f) {               
