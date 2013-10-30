@@ -519,7 +519,9 @@ GEOR.Addons.InsertCSV.prototype = {
         
     createLayer:function(name){
 	layerCSV = new OpenLayers.Layer.Vector(name, {
+	    //visibility: true,
             displayInLayerSwitcher: true,
+	    params: [],
              styleMap: new OpenLayers.StyleMap({
                 "default": {
 		    graphicName: "cross",
