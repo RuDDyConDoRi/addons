@@ -223,7 +223,7 @@ GEOR.Addons.InsertCSV.prototype = {
     },
            
     createPopup:function (feature) {
-        popup = new GeoExt.Popup({
+        popup = new GeoExt.Popup.GeOrchestra({
             closable: true,
             closeAction: 'hide',
             layout:'auto',
@@ -231,7 +231,7 @@ GEOR.Addons.InsertCSV.prototype = {
             location: feature,
             width:200,
             html: "<div style='font-size:9'>"+feature.attributes.foo+" </div>",
-            popupCls: "gx-popup-point",
+            popupCls: "popup-csv",
 	    resizable: false,
 	    hideBorders : true,
 	    unpinnable:false,

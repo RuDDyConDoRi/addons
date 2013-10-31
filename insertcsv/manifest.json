@@ -1,7 +1,8 @@
 {
     "js": [
         "js/main.js",
-        "js/MultiSelect.js"
+        "js/MultiSelect.js",
+	"lib/PopupGeOrchestra.js"
         
     ],
     "css": [
