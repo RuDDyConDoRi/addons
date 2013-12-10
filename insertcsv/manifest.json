@@ -2,7 +2,8 @@
     "js": [
         "js/main.js",
         "js/MultiSelect.js",
-	"lib/PopupGeOrchestra.js"
+	"lib/PopupGeOrchestra.js",
+        "lib/MessageBoxGeo.js"
         
     ],
     "css": [
