@@ -1,0 +1,32 @@
+{
+    "js": [
+        "js/main.js",
+        "js/MultiSelec.js"
+        
+    ],
+    "css": [
+        "css/main.css",
+        "css/MultiSelec.css"
+    ],
+    "default_options": {
+        "editableCombos": true,
+        "urlHelp": "http://geo.gob.bo/?-Ayuda-45-"
+    },
+    "i18n": {
+        "en": {
+            "tittle":"Export To KML",
+	    "CSV file layers":"CSV file layers"
+            
+        },
+        "es": {
+            "tittle":"Exportar a KML",
+	    "CSV file layers":"Capas de archivos CSV"
+            
+        },
+        "fr": {
+            "tittle":"Export To KML",
+	    "CSV file layers":"Couches de fichiers CSV"
+            
+        }
+    }
+}
