@@ -5,13 +5,13 @@
 
 Ext.namespace("GEOR.Addons");
 
-GEOR.Addons.ExportCSVtoKML = function(map, options) {
+GEOR.Addons.InsertCSV = function(map, options) {
     this.map = map;
     this.options = options;
     this.layer = null;
 };
 
-GEOR.Addons.ExportCSVtoKML.prototype = {
+GEOR.Addons.InsertCSV.prototype = {
     
     item: null,
     stores: {},
@@ -36,7 +36,10 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
     mmap: null,                                                
     nameLayer:"",
     icon: null,
-/**
+    
+    arrFeatures: null,
+    actions: null,
+    /**
 * Method: init
 *
 * Parameters:
@@ -105,7 +108,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
             var d1 = da[1].split("=");
             var d2 = da[2].split("=");
             var reg = myFile.split("\n");
-         var columns= reg.length;
+	    var columns= reg.length;
             var lat=0;
             var lon = 0;
         
@@ -117,18 +120,34 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
                         new OpenLayers.Geometry.Point(lat, lon).transform(
 			    new OpenLayers.Projection("EPSG:4326"),
 			    new OpenLayers.Projection("EPSG:900913")
-                        ),{
+                        ),
+			{
                          foo : GEOR.Addons.InsertCSV.prototype.setInformationPopup(i)
-                        },{
+                        },
+			{
 			    externalGraphic: this.icon,
 			    graphicHeight: 21,
                             graphicWidth: 16
                         }
 		    );
+		    
+		    var feature_kml = new OpenLayers.Feature.Vector(
+                        new OpenLayers.Geometry.Point(lat, lon).transform(
+                         new OpenLayers.Projection("EPSG:4326"),
+                         new OpenLayers.Projection("EPSG:900913")
+                        )
+		    );
 		    feature.attributes = {
 			name: " ",
 			description: GEOR.Addons.InsertCSV.prototype.setInformationPopup(i),
+			//age: 20,
+			//favColor: 'red',
+			//align: "cm",
+			externalGraphic: this.icon,
+			graphicHeight: 21,
+                        graphicWidth: 16
 		    };
+		    arrFeatures.push(feature);
                     layerCSV.addFeatures(feature);
                 }
             }
@@ -165,15 +184,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
 		    handler : function() {
 		           window.open(this.options.urlHelp);
 		    }
-                },'->',{
-		    text: OpenLayers.i18n('Export KML'),
-		    border: false,
-		    handler: function(){
-			GEOR.Addons.InsertCSV.prototype.exportLayersCSV();
-			this.win.hide();
-		    },
-		    scope: this
-		},
+                },'->',
 		
 		{
                  text: OpenLayers.i18n('Import'),
@@ -203,7 +214,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
                                 this.win.hide();
                                 GEOR.Addons.InsertCSV.prototype.resetValues();
                          } else{
-                                var msg = OpenLayers.i18n('Insert Fields Latitude and Longitude')
+                                var msg = OpenLayers.i18n('Insert Fields Latitude and Longitude');
                                          +'<br><big><big><b><font color=#A00000><div align=center>"-63.121212"</div></font></b></big></big>';
                                  Ext.MessageBox.show({
                                  title: OpenLayers.i18n('The Data Not Numeric'),
@@ -213,7 +224,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
                                  msg: msg,
                                  buttons: Ext.MessageBox.OK,
                                  icon: Ext.MessageBox.ERROR
-                                })                                         
+                                });
                          }
                         } else{
                          Ext.Msg.alert(OpenLayers.i18n('Required Field'), OpenLayers.i18n('Select Fields'));
@@ -532,6 +543,8 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
     },
         
     createLayer:function(name){
+	arrFeatures = [];
+	
         layerCSV = new OpenLayers.Layer.Vector(name, {
 	    valueCSV: "csv",
 	    data:"csv",
@@ -554,6 +567,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
         });
         this.layer= layerCSV;
         mmap.addLayer(this.layer);
+        
         ctrlSelect = new OpenLayers.Control.SelectFeature(this.layer);
         mmap.addControl(ctrlSelect);
         ctrlSelect.activate();
@@ -563,87 +577,6 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
         this.layer = null;
         this.mmap = null;
         this.win.destroy();
-    },
-    
-    exportAsKml: function(layer_insert) {
-	if(layer_insert.features.length>0){
-	    var urlObj = OpenLayers.Util.createUrlObject(window.location.href),
-	    format = new OpenLayers.Format.KML({
-		'foldersName': urlObj.host,
-		'internalProjection': mmap.getProjectionObject(),
-		'externalProjection': new OpenLayers.Projection("EPSG:4326")
-	    });
-	    OpenLayers.Request.POST({
-		url: "ws/kml/",
-		data: format.write(layer_insert.features),
-		success: function(response) {
-		    var o = Ext.decode(response.responseText);
-		    window.location.href = o.filepath;
-		}
-	    });
-	}
-    },
-    
-    exportLayersCSV: function(){
-        var comboKML = GEOR.Addons.InsertCSV.prototype.comboLayersKML();
-	Ext.MessageBoxGeo.show({		    
-	    title: 'ExportKML',
-	    msg: 'Elija la Capa del archivo CSV<br />',
-	    value: 'layer 0',
-	    buttons: Ext.MessageBox.OKCANCEL,
-	    inputField: comboKML,
-	    fn: function(buttonId, text) {
-		    if (buttonId == 'ok'){
-			GEOR.Addons.InsertCSV.prototype.findLayer(comboKML.getValue());
-		    }
-		},
-	});
-    },
-    
-    findLayer:function(valor){
-	var layer = null;
-        var layersVisible = mmap.layers;
-		
-        for(var i=layersVisible.length-1 ; i>= 0 ; i--){
-	    GEOR.waiter.show();
-	    layer = mmap.layers[i];
-            if (layer.valueCSV == "csv") {
-		if (layer.name == valor) {
-		    GEOR.Addons.InsertCSV.prototype.exportAsKml(layer);
-		}
-            }
-        }
-    },
-    comboLayersKML:function(){
-	var storeKML = new Ext.data.ArrayStore({
-	    fields: ['number','layer'],
-	    data : [[0," "]]
-	});
-        var layer = null;
-        var layersVisible = mmap.layers;
-	var newData = [];
-	
-        for(var i=layersVisible.length-1 ; i>= 0 ; i--){
-	    layer = mmap.layers[i];
-            if (layer.valueCSV == "csv") {
-		newData.push([i, layer.name]);
-		storeKML.loadData(newData,false);
-		storeKML.data.reload;
-            }
-        }
-	
-	return (new Ext.form.ComboBox({
-		    typeAhead: true,
-		    displayField: 'layer',
-		    store: storeKML,
-		    mode: 'local',
-		    triggerAction: 'all',
-		    forceSelection: true,
-		    onSelect: function(record) {
-			this.setValue(record.data.layer);
-			this.collapse();
-		    }
-		}));
     }
 };
 

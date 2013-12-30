@@ -2,8 +2,7 @@
     "js": [
         "js/main.js",
         "js/MultiSelect.js",
-	"lib/PopupGeOrchestra.js",
-        "lib/MessageBoxGeo.js"
+	"lib/PopupGeOrchestra.js"
         
     ],
     "css": [
@@ -12,7 +11,7 @@
     ],
     "default_options": {
         "editableCombos": true,
-        "urlHelp": "http://geo.gob.bo/?-Ayuda-45-"
+        "urlHelp": "http://geo.gob.bo/?Importar-archivo-CSV"
     },
     "i18n": {
         "en": {
