@@ -12,26 +12,17 @@ GEOR.Addons.ExportCSVtoKML = function(map, options) {
 };
 
 GEOR.Addons.ExportCSVtoKML.prototype = {
-    
     item: null,
     stores: {},
     layer: null,
     jsonFormat: null,
     geojsonFormat: null,
-    
-    //panelData: null,
     panelLayers: null,
-    
     listLayers: null,                                        
     layerarray: null,                                         
-    //listDesc:null,                                                
     myForm: null,                                        
-              
     ctrlSelect:null,                                        
-    //layerCSV: null,                                        
     mmap: null,                                                
-    //nameLayer:"",
-    //icon: null,
 /**
 * Method: init
 *
@@ -51,14 +42,15 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
             handler: this.showWindow,
             scope: this
         });
+	
         layerarray = new Ext.data.ArrayStore({
 	    fields: ['number','layer'],
 	    data : [[0," "]]
 	});
-	GEOR.Addons.ExportCSVtoKML.prototype.update();        
+	
+	this.update();        
         listLayers = this.createList();
         panelLayers = this.createPanelLayers();
-       
         myForm = this.createForm();
         return this.item;
     },
@@ -91,28 +83,22 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
 		    },{
 			iconCls:'refresh-icon',
 			iconAlign: 'left',
-			text:OpenLayers.i18n("  Refresh"),
+			text:OpenLayers.i18n("Refresh"),
 			textAlign: 'right',
 			scope: this,
 			handler : function() {
-			    GEOR.Addons.ExportCSVtoKML.prototype.update();
+			    this.update();
 			}
 		    },'->',{
-		    text: OpenLayers.i18n('Export KML'),
-		    border: false,
-		    handler: function(){
-			GEOR.Addons.ExportCSVtoKML.prototype.exportLayersCSV();
-			this.win.hide();
-		    },
-		    scope: this
-		}
-                ],
-                listeners: {
-                 "hide": function() {
-		    //GEOR.Addons.ExportCSVtoKML.prototype.enablePanel(true);
-		    //GEOR.Addons.ExportCSVtoKML.prototype.resetValues();
-                 }, scope: this
-                }
+			text: OpenLayers.i18n("Export KML"),
+			border: false,
+			handler: function(){
+			    this.exportLayersCSV();
+			    this.win.hide();
+			},
+			scope: this
+		    }
+                ]
             });
         }
         this.win.show();
@@ -120,39 +106,34 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
     
     createForm: function() {
         return new Ext.FormPanel({
-         labelWidth: 100,
-	 labelAlign: 'right',
-	 width: '100%',
-         height: '100%',
-	 frame: true,
-	 bodyStyle: 'padding:5px 5px 0',
-	 items: [{
+	    labelWidth: 100,
+	    labelAlign: 'right',
+	    width: '100%',
+	    height: '100%',
+	    frame: true,
+	    bodyStyle: 'padding:5px 5px 0',
+	    items: [{
 		xtype:'label',
 		text: OpenLayers.i18n('Choose a layer to export to KML format'),
 		style: 'font-size: 9pt;',
 		anchor:'100%'
-	    }, {
+	      }, {
 		layout: 'column',
 		items: [{
 			  columnWidth: 1.0,
 			  layout: 'form',
 			  items: [panelLayers]
 			}
-		    ],
-		    listeners: {
-		    }
-                }
-         ]
+		]
+              }
+	    ]
         });
     },
       
     update: function(){                                         
-        
         var layer = null;
         var layersVisible = mmap.layers;
-	
 	var newData = [];
-	
         for(var i=layersVisible.length-1 ; i>= 0 ; i--){
 	    layer = mmap.layers[i];
             if (layer.valueCSV == "csv") {
@@ -165,33 +146,32 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
     
     createList: function(){
         var listLayers = {
-         xtype: 'multiselect',
-         fieldLabel: OpenLayers.i18n('CSV file layers'),
-         name: 'multiselec',
-         displayField: 'layer',
-         valueField: 'number',
-         width: 160,
-         height: 100,
-         triggerAction: 'all',
-         allowBlank:false,
-         store: layerarray,
-         ddReorder: true,
-        };
+	    xtype: 'multiselect',
+	    fieldLabel: OpenLayers.i18n('CSV file layers'),
+	    name: 'multiselec',
+	    displayField: 'layer',
+	    valueField: 'number',
+	    width: 160,
+	    height: 100,
+	    triggerAction: 'all',
+	    allowBlank:false,
+	    store: layerarray,
+	    ddReorder: true
+	};
         return listLayers;
     },
            
     createPanelLayers:function(){
         var panel = new Ext.Panel({
-         width: 350,
-         layout: 'column',
-         border: false,
-         items: [{
-                  columnWidth: 1.0,
-                  layout: 'form',
-                  items: [listLayers]
-                }
-         ]
-        });
+	    width: 350,
+	    layout: 'column',
+	    border: false,
+	    items: [{
+		columnWidth: 1.0,
+		layout: 'form',
+		items: [listLayers]
+	    }]
+	});
         return panel;
     },
         
@@ -202,6 +182,7 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
     },
     
     exportAsKml: function(layer_insert) {
+	GEOR.waiter.show();
 	if(layer_insert.features.length>0){
 	    var urlObj = OpenLayers.Util.createUrlObject(window.location.href),
 	    format = new OpenLayers.Format.KML({
@@ -217,26 +198,40 @@ GEOR.Addons.ExportCSVtoKML.prototype = {
 		    window.location.href = o.filepath;
 		}
 	    });
-	}
+	}	
     },
     
     exportLayersCSV: function(){
         var dats= myForm.getForm().getValues(true).replace(/&/g,', ');
 	var da= dats.split(",");
 	var desc = da[0].split("=");
-        
-        if (desc[1] != '') {
-	    var layer = null;
-	    var layersVisible = mmap.layers;   
-	    for(var i=layersVisible.length-1 ; i>= 0 ; i--){
-		GEOR.waiter.show();
-		layer = mmap.layers[i];
-		if (layer.valueCSV == "csv") {
-		    if (i == desc[1]) {
-			GEOR.Addons.ExportCSVtoKML.prototype.exportAsKml(layer);
+	var verificacion = desc[1].split("%2C");
+
+	if (verificacion.length > 1) {
+	    verificacion = null;
+	    var msg = OpenLayers.i18n('No 2 or More layers');
+            Ext.MessageBox.show({
+		title: OpenLayers.i18n('Too Many Layers'),
+		width: 225,
+		height: 100,
+		y: 50,
+		msg: msg,
+		buttons: Ext.MessageBox.OK,
+		icon: Ext.MessageBox.ERROR
+	    });
+	}else{
+	    if (desc[1] != '') {
+		var layer = null;
+		var layersVisible = mmap.layers;
+		for(var i=layersVisible.length-1 ; i>= 0 ; i--){
+		    layer = mmap.layers[i];
+		    if (layer.valueCSV == "csv") {
+			if (i == desc[1]) {
+			    this.exportAsKml(layer);
+			}
 		    }
 		}
 	    }
-        }
-    },
+	}
+    }
 };

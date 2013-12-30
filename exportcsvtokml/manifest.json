@@ -15,18 +15,32 @@
     "i18n": {
         "en": {
             "tittle":"Export To KML",
-	    "CSV file layers":"CSV file layers"
+	    "CSV file layers":"CSV file layers",
+	    "Refresh":"Refresh",
+	    "Export KML":"Export",
+	    "Choose a layer to export to KML format":"Choose a layer to export to KML format",
+	    "No 2 or More layers":"You can not export 2 or more layers at once",
+	    "Too Many Layers":"Too Many Layers"
             
         },
         "es": {
             "tittle":"Exportar a KML",
-	    "CSV file layers":"Capas de archivos CSV"
+	    "CSV file layers":"Capas de archivos CSV",
+	    "Refresh":"Actualizar",
+	    "Export KML":"Exportar",
+	    "Choose a layer to export to KML format":"Elija una capa de exportar a formato KML",
+	    "No 2 or More layers":"No se pueden exportar 2 o mas capas al mismo tiempo",
+	    "Too Many Layers":"Demasiadas Capas"
             
         },
         "fr": {
-            "tittle":"Export To KML",
-	    "CSV file layers":"Couches de fichiers CSV"
-            
+            "tittle":"Exporter vers KML",
+	    "CSV file layers":"Couches de fichiers CSV",
+            "Refresh":"Actualiser",
+	    "Export KML":"Exporter",
+	    "Choose a layer to export to KML format":"Choisissez une couche d'exporter au format KML",
+	    "No 2 or More layers":"Vous ne pouvez pas exporter 2 ou plusieurs couches à la fois",
+	    "Too Many Layers":"Trop de couches"
         }
     }
 }
